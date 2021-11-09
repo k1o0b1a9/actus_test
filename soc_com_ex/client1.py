@@ -7,10 +7,13 @@ ip1 = '127.0.0.1'
 port1 = 8765
 server1 = (ip1, port1)
 
+#アドレス体系をIPv4、ソケットタイプをTCPに指定
 socket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#接続先のIPアドレス、ポート番号をタプルで指定して接続要求
 socket1.connect(server1)
 
-line = ''
+line = 0
+#byeでループ抜け
 while line != 'bye':
     # 標準入力からデータを取得
     print('偶数の数値を入力して下さい')
