@@ -16,55 +16,65 @@ while True:
     
     #strでクライアントプログラムからの入力を受け取る
     rcvmsg = clientsock.recv(4096).decode()
-    
     #入力された文字列がexitであった場合、その時点で処理終了
     if rcvmsg == 'exit':
         break
     
     #数値単独の場合そのまま代入
     if(str.isdigit(rcvmsg))==True:
-        y=rcvmsg
+        sndmsg=rcvmsg
     #=のあとに数値が続いている場合もそのまま代入
     elif (rcvmsg.find("="))!=-1:
         if(str.isdigit(rcvmsg[(rcvmsg.find("=")+1):]))==True:
-            y = rcvmsg[(rcvmsg.find("=")+1):]
+            sndmsg = rcvmsg[(rcvmsg.find("=")+1):]
         else:
-            y="数値を入力してください"
+            #文字列の場合、エラーを直接送りもう一度入力
+            clientsock.sendall("数値を入力してください".encode('utf-8')) 
+            continue
     #足し算
     elif (rcvmsg.find("+"))!=-1:
         if(str.isdigit(rcvmsg[(rcvmsg.find("+")+1):]))==True:
-            y=int(float(y))
-            y += int(rcvmsg[(rcvmsg.find("+")+1):])
+            sndmsg=float(sndmsg)
+            sndmsg += float(rcvmsg[(rcvmsg.find("+")+1):])
         else:
-            y="数値を入力してください"
+            #文字列の場合、エラーを直接送りもう一度入力
+            clientsock.sendall("数値を入力してください".encode('utf-8')) 
+            continue
     #引き算
     elif (rcvmsg.find("-"))!=-1:
         if(str.isdigit(rcvmsg[(rcvmsg.find("-")+1):]))==True:
-            y=int(float(y))
-            y -= int(rcvmsg[(rcvmsg.find("-")+1):])
+            sndmsg=float(sndmsg)
+            sndmsg -= float(rcvmsg[(rcvmsg.find("-")+1):])
         else:
-            y="数値を入力してください"
+            #文字列の場合、エラーを直接送りもう一度入力
+            clientsock.sendall("数値を入力してください".encode('utf-8')) 
+            continue
     #掛け算    
     elif (rcvmsg.find("*"))!=-1:
         if(str.isdigit(rcvmsg[(rcvmsg.find("*")+1):]))==True:
-            y=int(float(y))
-            y *= int(rcvmsg[(rcvmsg.find("*")+1):])
+            sndmsg=float(sndmsg)
+            sndmsg *= float(rcvmsg[(rcvmsg.find("*")+1):])
         else:
-            y="数値を入力してください"
+            #文字列の場合、エラーを直接送りもう一度入力
+            clientsock.sendall("数値を入力してください".encode('utf-8')) 
+            continue
     #割り算
     elif (rcvmsg.find("/"))!=-1:
         if(str.isdigit(rcvmsg[(rcvmsg.find("/")+1):]))==True:
-            y=int(float(y))
-            y /= int(rcvmsg[(rcvmsg.find("/")+1):])
+            sndmsg=float(sndmsg)
+            sndmsg /= float(rcvmsg[(rcvmsg.find("/")+1):])
         else:
-           y="数値を入力してください"
-    #文字列が入力された場合
+            #文字列の場合、エラーを直接送りもう一度入力
+            clientsock.sendall("数値を入力してください".encode('utf-8')) 
+            continue
     else:
-        y="数値を入力してください"
+            #文字列の場合、エラーを直接送りもう一度入力
+            clientsock.sendall("数値を入力してください".encode('utf-8')) 
+            continue
     
-    y=str(y)
+    sndmsg=str(sndmsg)
     
-    clientsock.sendall(y.encode('utf-8')) #メッセージを返します
+    clientsock.sendall(sndmsg.encode('utf-8')) #メッセージを返します
 
 #クローズ処理 
 print("Now Closing")
