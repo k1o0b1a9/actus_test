@@ -2,12 +2,13 @@
 import socket
 
 host = socket.gethostname() #ホスト名取得
-port = 8765 #PORT指定(クライアントと一致していればOK)
+port = 8080 #PORT指定(クライアントと一致していればOK)
 
-serversock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+print(host)
+serversock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 serversock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 serversock.bind((host,port)) #IPとPORTを指定してバインドします
-serversock.listen(10) #接続の待ち受けをします（キューの最大数を指定）
+serversock.listen(1) #接続の待ち受けをします（キューの最大数を指定）
 
 print('Waiting for connections...')
 clientsock, client_address = serversock.accept() #接続されればデータを格納

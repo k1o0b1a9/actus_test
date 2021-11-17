@@ -2,7 +2,7 @@
 import socket
 
 host = socket.gethostname() #ホスト名取得
-port = 8765 #PORT指定(クライアントと一致していればOK)
+port = 8080 #PORT指定(クライアントと一致していればOK)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #オブジェクトの作成をします
 
