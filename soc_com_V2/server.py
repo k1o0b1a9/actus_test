@@ -4,9 +4,7 @@ import socket
 host = socket.gethostname() #ホスト名取得
 port = 8080 #PORT指定(クライアントと一致していればOK)
 
-print(host)
-serversock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-serversock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+serversock = socket.socket(socket.AF_INET,socket.SOCK_STREAM) #オブジェクトの作成
 serversock.bind((host,port)) #IPとPORTを指定してバインドします
 serversock.listen(1) #接続の待ち受けをします（キューの最大数を指定）
 
