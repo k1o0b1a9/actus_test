@@ -13,9 +13,17 @@ massage=0 #message初期値
 print("計算を行います、終了する場合は'exit'と入力してください")
 
 while massage != 'exit':
+
     print("Send Message")
 
-    massage=input()
+    
+    try:
+        massage=input()
+    except KeyboardInterrupt as message:
+        massage="exit"
+        client.send(massage.encode('utf-8')) #サーバープログラムにデータ送信
+        client.close()
+        break
     
     #入力ない場合は送信しない
     if not massage:

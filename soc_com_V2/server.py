@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 import socket
+import sys
 
 host = socket.gethostname() #ホスト名取得
 port = 8080 #PORT指定(クライアントと一致していればOK)
@@ -9,12 +10,20 @@ serversock.bind((host,port)) #IPとPORTを指定してバインドします
 serversock.listen(1) #接続の待ち受けをします（キューの最大数を指定）
 
 print('Waiting for connections...')
-clientsock, client_address = serversock.accept() #接続されればデータを格納
+
+#本来クライアントプログラムからの操作で終了が正常な使用法だが
+#万一サーバープログラムから終了しようとした場合に備えて実装
+try:
+    clientsock, client_address = serversock.accept() #接続されればデータを格納
+except KeyboardInterrupt as clientsock:
+    print("とじる")
+    sys.exit()
 
 while True:
     
     #strでクライアントプログラムからの入力を受け取る
     rcvmsg = clientsock.recv(4096).decode()
+    
     #入力された文字列がexitであった場合、その時点で処理終了
     if rcvmsg == 'exit':
         break
