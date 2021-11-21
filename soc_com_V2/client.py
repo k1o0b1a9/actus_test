@@ -8,7 +8,8 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #オブジェクト�
 
 client.connect((host, port)) #これでサーバーに接続します
 
-massage=0 #message初期値
+response=0 #response初期値
+massage=0 #massage初期値(未定義エラー回避のためexit以外で定義)
 
 print("計算を行います、終了する場合は'exit'と入力してください")
 
@@ -33,7 +34,7 @@ while massage != 'exit':
 
         response = client.recv(4096).decode() #サーバーの処理結果受信(レシーブは適当な2の累乗)
 
-        print(response)
+    print(response)
 
 print("計算を終了します")
 client.close()
