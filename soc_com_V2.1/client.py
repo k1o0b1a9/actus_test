@@ -16,6 +16,8 @@ for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC, socket.SOCK_STREAM):
     except OSError as msg:
         client = None
         continue
+    #getaddrinfoで取得しtアドレス情報とポート番号で接続
+    #失敗時はエラー文表示
     try:
         client.connect(sa)
     except OSError as msg:
